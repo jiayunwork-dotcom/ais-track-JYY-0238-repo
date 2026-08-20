@@ -116,12 +116,12 @@ func parseTime(s string) (time.Time, error) {
 // GroupByVessel groups records by MMSI. For nil or empty input it returns a
 // non-nil, empty map (never nil).
 func GroupByVessel(recs []Record) map[string][]Record {
+	out := make(map[string][]Record)
 	if len(recs) == 0 {
-		return make(map[string][]Record)
+		return out
 	}
-	var out map[string][]Record
 	for _, r := range recs {
-		putVessel(out, r)
+		out[r.MMSI] = append(out[r.MMSI], r)
 	}
 	return out
 }
